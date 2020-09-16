@@ -7,6 +7,6 @@ platforms:
   - GCP Functions
 data_sources:
   - name: Example
-    url: https://realestae.herokuapp.com/api/property/search/marketData
+    url: https://realestae.herokuapp.com/api/property/marketData
 parameters:
   - name
