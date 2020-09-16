@@ -12,8 +12,7 @@ const customError = (data) => {
 // with a Boolean value indicating whether or not they
 // should be required.
 const customParams = {
-  base: ['base', 'from', 'coin'],
-  quote: ['quote', 'to', 'market'],
+  name: ['Mannat', 'Taj', 'name'],
   endpoint: false
 }
 
@@ -21,29 +20,25 @@ const createRequest = (input, callback) => {
   // The Validator helps you validate the Chainlink request data
   const validator = new Validator(callback, input, customParams)
   const jobRunID = validator.validated.id
-  const endpoint = validator.validated.data.endpoint || 'price'
-  const url = `https://min-api.cryptocompare.com/data/${endpoint}`
-  const fsym = validator.validated.data.base.toUpperCase()
-  const tsyms = validator.validated.data.quote.toUpperCase()
-
+  const endpoint = validator.validated.data.endpoint || 'marketData'
+  const url = `https://realestae.herokuapp.com/api/property/search/${endpoint}`
+  const name = validator.validated.data.name.toUpperCase()
+  // const tsyms = validator.validated.data.name.toUpperCase()
+  console.log(name);
   const params = {
-    fsym,
-    tsyms
+    name
   }
 
-  const config = {
-    url,
-    params
-  }
-
+  const configUrl = `${url}?name=${name}`
+  console.log(configUrl);
   // The Requester allows API calls be retry in case of timeout
   // or connection failure
-  Requester.request(config, customError)
+  Requester.request(configUrl, customError)
     .then(response => {
       // It's common practice to store the desired value at the top-level
       // result key. This allows different adapters to be compatible with
       // one another.
-      response.data.result = Requester.validateResultNumber(response.data, [tsyms])
+      response.data.result = Requester.validateResultNumber(response.data, ['main', 'name'])
       callback(response.status, Requester.success(jobRunID, response))
     })
     .catch(error => {
