@@ -1,0 +1,12 @@
+name: RealEstate Data
+description: An example adapter that does sends test real estate data,This adaptar is send test data created for hackathon.
+node_identifier: realEstate
+platforms:
+  - Docker
+  - AWS Lambda
+  - GCP Functions
+data_sources:
+  - name: Example
+    url: https://realestae.herokuapp.com/api/property/search/marketData
+parameters:
+  - name
