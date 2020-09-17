@@ -29,16 +29,22 @@ const createRequest = (input, callback) => {
     name
   }
 
-  const configUrl = `${url}?name=${name}`
-  console.log(configUrl);
+  const config = {
+    url,
+    params,
+    method: 'post'
+  }
+
+  //const configUrl = `${url}?name=${name}`
+  console.log(config);
   // The Requester allows API calls be retry in case of timeout
   // or connection failure
-  Requester.request(configUrl, customError)
+  Requester.request(config, customError)
     .then(response => {
-      // It's common practice to store the desired value at the top-level
-      // result key. This allows different adapters to be compatible with
-      // one another.
-      response.data.result = Requester.validateResultNumber(response.data, ['main', 'name'])
+      response.data.result = {
+        name: response.data[0]['name'],
+        surfaceArea: response.data[0]['surfaceArea']
+      }
       callback(response.status, Requester.success(jobRunID, response))
     })
     .catch(error => {
