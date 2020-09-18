@@ -42,11 +42,11 @@ const createRequest = (input, callback) => {
   Requester.request(config, customError)
     .then(response => {
       // response.data.result = {
-      //   name: response.data[0]['name'],
+      //   //name: response.data[0]['name'],
       //   surfaceArea: response.data[0]['surfaceArea'],
-      //   closePrice: respose.data[0][]
+      //   //closePrice: respose.data[0][]
       // }
-      response.data.result = Requester.validateResultNumber(response.data, [0]['surfaceArea'])
+      //response.data.result = Requester.validateResultNumber(response.data, [0]['surfaceArea'])
       callback(response.status, Requester.success(jobRunID, response))
     })
     .catch(error => {
